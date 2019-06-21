@@ -3,6 +3,9 @@ kind: ClusterRole
 metadata:
   name: bolt-workflow-terminator
 rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete"]
   - apiGroups: ["argoproj.io"]
     resources: ["workflows"]
     verbs: ["create"]
