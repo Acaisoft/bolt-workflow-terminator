@@ -39,4 +39,6 @@ class KubernetesService:
             label_selector=f"workflows.argoproj.io/workflow={workflow_name}",
         )
         for pod in pods.items:
+            if pod.metadata.labels.get('prevent-bolt-termination') == 'true':
+                continue
             self._core_cli.delete_namespaced_pod(pod.metadata.name, self.namespace)
