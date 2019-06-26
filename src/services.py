@@ -41,4 +41,6 @@ class KubernetesService:
         for pod in pods.items:
             if pod.metadata.labels.get('prevent-bolt-termination') == 'true':
                 continue
+            if pod.status.phase.lower() not in ('pending', 'running'):
+                continue
             self._core_cli.delete_namespaced_pod(pod.metadata.name, self.namespace)
